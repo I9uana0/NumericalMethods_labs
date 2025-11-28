@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Метод Гаусса</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      /* align-items: center; */
+    }
+
+    #gaussMatrixForm {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 10px;
+      border: solid 1px black;
+      border-radius: 5px;
+    }
+
+    #gaussMatrixInput {
+      min-width: 300px
+    }
+
+    #gaussSubmitButton {
+      border-radius: 5px;
+      background-color: black;
+      color: white;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div id="gaussWrapper">
+    <form id="gaussMatrixForm">
+      <textarea id="gaussMatrixInput" type="text"
+        placeholder="Введите матрицу в формате [[строка], [строка]]"></textarea>
+      <input id="gaussVectorInput" type="text" placeholder="Введите вектор в формате [вектор]">
+      <button id="gaussSubmitButton" type="submit">Рассчитать</button>
+    </form>
+    <span id="gaussResultSpan"></span>
+    <canvas id="gaussMatrixChart"></canvas>
+  </div>
+  <script>
+    function gaussMethod(A, b) {
+      const n = A.length;
+
+      // расширенная матрица
+      for (let i = 0; i < n; i++) {
+        A[i] = [...A[i], b[i]];
+      }
+
+      // прямой ход
+      for (let i = 0; i < n; i++) {
+
+        // 1. поиск главного элемента
+        let maxRow = i;
+        for (let k = i + 1; k < n; k++) {
+          if (Math.abs(A[k][i]) > Math.abs(A[maxRow][i])) {
+            maxRow = k;
+          }
+        }
+
+        // 2. перестановка строк
+        [A[i], A[maxRow]] = [A[maxRow], A[i]];
+
+        // 3. нормализация строки
+        let pivot = A[i][i];
+        for (let j = i; j < n + 1; j++) {
+          A[i][j] /= pivot;
+        }
+
+        // 4. зануление строк ниже
+        for (let k = i + 1; k < n; k++) {
+          let coeff = A[k][i];
+          for (let j = i; j < n + 1; j++) {
+            A[k][j] -= coeff * A[i][j];
+          }
+        }
+      }
+
+      // обратный ход
+      let x = Array(n).fill(0);
+
+      for (let i = n - 1; i >= 0; i--) {
+        x[i] = A[i][n];
+        for (let j = i + 1; j < n; j++) {
+          x[i] -= A[i][j] * x[j];
+        }
+      }
+
+      return x;
+    }
+
+    let chart = null;
+
+    function drawChart(values) {
+      if (values[0] === "NaN") return;
+      if (chart) chart.destroy();
+
+      const labels = values.map((_, i) => `x${i + 1}`);
+
+      chart = new Chart(gaussMatrixChart, {
+        type: "line",
+        data: {
+          labels,                 // подписи оси X
+          datasets: [{
+            label: "Решение системы",
+            data: values,         // сами числа
+            borderColor: "blue",
+            borderWidth: 2,
+            tension: 0.2,         // сглаживание
+            pointRadius: 5
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: false
+            }
+          }
+        }
+      });
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const matrix = gaussMatrixInput.value.trim() === ""
+        ? [[]]
+        : JSON.parse(gaussMatrixInput.value);
+
+      const vector = gaussVectorInput.value.trim() === ""
+        ? []
+        : JSON.parse(gaussVectorInput.value);
+
+      const result = gaussMethod(matrix, vector).map(x => x.toFixed(3));
+      console.log(result);
+
+      gaussResultSpan.innerHTML = result[0] !== "NaN"
+        ? `<ul>${result.map((x, i) => `<li>x${i + 1} = ${x}</li>`).join('')}</ul>`
+        : "<p style='text-align:center'>Неверный формат данных</p>";
+
+      drawChart(result);
+    }
+
+    gaussMatrixForm.addEventListener('submit', handleSubmit)
+  </script>
+</body>
+
+</html>
