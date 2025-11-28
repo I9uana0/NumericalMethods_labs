@@ -127,7 +127,10 @@ function handleSubmit(e) {
   } catch {
     gaussResultSpan.innerHTML =
       "<p style='text-align:center'>Неверный формат данных</p>";
-    if (chart) chart.destroy();
+    if (chart) {
+      chart.destroy();
+      chart = null;
+    }
     return;
   }
 
