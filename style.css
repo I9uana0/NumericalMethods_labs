@@ -1,0 +1,59 @@
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      /* align-items: center; */
+    }
+
+    #gaussWrapper {
+      padding: 8px;
+    }
+
+    #gaussMatrixForm {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 10px;
+      border: solid 1px black;
+      border-radius: 5px;
+    }
+
+    #gaussMatrixInput {
+      width: auto;
+      height: auto;
+      min-width: 300px;
+      min-height: 100px;
+      padding: 4px;
+    }
+
+    #gaussVectorInput {
+      padding: 4px;
+    }
+
+    #gaussSubmitButton {
+      background-color: black;
+      /* основной цвет кнопки */
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: opacity 0.2s ease, transform 0.1s ease;
+      /* плавная смена цвета и смещения */
+    }
+
+    @media(hover:hover) {
+      #gaussSubmitButton:hover {
+        opacity: 80%
+      }
+    }
+
+    #gaussSubmitButton:active {
+      opacity: 100%;
+    }
