@@ -1,3 +1,15 @@
+const resultSpan = document.getElementById("gaussResultSpan");
+const chartCanvas = document.getElementById("gaussMatrixChart");
+let chart = null;
+let chartExists = false;
+
+function hasError() {
+  return (
+    resultSpan.textContent.toLowerCase().includes("неверный формат") ||
+    resultSpan.textContent.toLowerCase().includes("размеры не совпадают")
+  );
+}
+
 function gaussMethod(A, b) {
   const n = A.length;
 
@@ -47,18 +59,13 @@ function gaussMethod(A, b) {
   return x;
 }
 
-let chart = null;
-
 function drawChart(values) {
-  // Преобразуем строки в числа, если вдруг остались
   values = values.map(Number);
 
-  // Проверка на NaN
   if (values.some((v) => isNaN(v))) return;
 
   const labels = values.map((_, i) => `x${i + 1}`);
 
-  // находим min и max
   const minY = Math.min(...values);
   const maxY = Math.max(...values);
   const padding = (maxY - minY) * 0.1;
@@ -66,8 +73,7 @@ function drawChart(values) {
   const maxYRounded = Math.ceil((maxY + padding) / 5) * 5;
 
   if (!chart) {
-    // Создаём график один раз
-    chart = new Chart(gaussMatrixChart, {
+    chart = new Chart(chartCanvas, {
       type: "line",
       data: {
         labels,
@@ -84,15 +90,13 @@ function drawChart(values) {
       },
       options: {
         scales: {
-          y: {
-            min: minYRounded,
-            max: maxYRounded,
-          },
+          y: { min: minYRounded, max: maxYRounded },
         },
       },
     });
+
+    chartExists = true;
   } else {
-    // Обновляем существующий график
     chart.data.labels = labels;
     chart.data.datasets[0].data = values;
     chart.options.scales.y.min = minYRounded;
@@ -106,6 +110,23 @@ function isNumber(value) {
   const num = Number(value);
   // проверяем, что это действительно число и не NaN
   return !isNaN(num) && value.toString().trim() !== "";
+}
+
+function updateVisibility() {
+  // если в span пусто — прячем
+  if (!resultSpan.textContent.trim()) {
+    resultSpan.style.display = "none";
+  } else {
+    resultSpan.style.display = "block";
+  }
+
+  // если нет данных для графика — скрываем
+  if (!chartExists || hasError()) {
+    // chartExists — флаг, который ты ставишь, когда создаёшь график
+    chartCanvas.style.display = "none";
+  } else {
+    chartCanvas.style.display = "block";
+  }
 }
 
 function handleSubmit(e) {
@@ -127,10 +148,13 @@ function handleSubmit(e) {
   } catch {
     gaussResultSpan.innerHTML =
       "<p style='text-align:center'>Неверный формат данных</p>";
+
     if (chart) {
       chart.destroy();
       chart = null;
     }
+
+    updateVisibility();
     return;
   }
 
@@ -141,7 +165,11 @@ function handleSubmit(e) {
   ) {
     gaussResultSpan.innerHTML =
       "<p style='text-align:center'>Размеры не совпадают</p>";
+
     if (chart) chart.destroy();
+    chart = null;
+
+    updateVisibility();
     return;
   }
 
@@ -155,7 +183,10 @@ function handleSubmit(e) {
   gaussResultSpan.innerHTML = `<ul>${result
     .map((x, i) => `<li>x${i + 1} = ${x}</li>`)
     .join("")}</ul>`;
+
   drawChart(result);
+
+  updateVisibility();
 }
 
 gaussMatrixForm.addEventListener("submit", handleSubmit);

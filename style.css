@@ -1,59 +1,91 @@
-    html,
-    body {
-      height: 100%;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Roboto:wght@300;400;500;700&display=swap');
 
-    body {
-      display: flex;
-      justify-content: center;
-      margin: 0;
-      /* align-items: center; */
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    #gaussWrapper {
-      padding: 8px;
-    }
+html {
+  font-family: Roboto, sans-serif;
+  background: #f4f6f8;
+}
 
-    #gaussMatrixForm {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      padding: 10px;
-      border: solid 1px black;
-      border-radius: 5px;
-    }
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 40px 10px;
+}
 
-    #gaussMatrixInput {
-      width: auto;
-      height: auto;
-      min-width: 300px;
-      min-height: 100px;
-      padding: 4px;
-    }
+h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #333;
+}
 
-    #gaussVectorInput {
-      padding: 4px;
-    }
+h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 10px;
+}
 
-    #gaussSubmitButton {
-      background-color: black;
-      /* основной цвет кнопки */
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: opacity 0.2s ease, transform 0.1s ease;
-      /* плавная смена цвета и смещения */
-    }
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  max-width: 900px;
+}
 
-    @media(hover:hover) {
-      #gaussSubmitButton:hover {
-        opacity: 80%
-      }
-    }
+li {
+  list-style: none;
+  flex: 0 1 calc(25% - 1.2rem);
+  /* 4 элемента */
+}
 
-    #gaussSubmitButton:active {
-      opacity: 100%;
-    }
+/* Карточки */
+li a {
+  display: block;
+  height: 100%;
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  text-decoration: none;
+  text-align: center;
+  color: #333;
+  font-weight: 500;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+  border: 1px solid #e5e7eb;
+}
+
+li a:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  border-color: #d1d5db;
+}
+
+.lab-section {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 2rem;
+}
+
+
+/* 2 карточки в строке на узких экранах */
+@media (max-width: 700px) {
+  li {
+    flex: 0 1 calc(50% - 1.2rem);
+  }
+}
+
+/* 1 карточка в строке на совсем узких */
+@media (max-width: 450px) {
+  li {
+    flex: 0 1 100%;
+  }
+}
