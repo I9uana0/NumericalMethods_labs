@@ -32,9 +32,11 @@ h1 {
 }
 
 .header-container {
-  position: relative;
   width: 100%;
   max-width: 700px;
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2.2vw, 30px);
   margin: 0 auto 20px;
   text-align: center;
 }
@@ -47,10 +49,6 @@ h1 {
 }
 
 .back-link {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
   text-decoration: none;
   font-size: 1rem;
   color: #3b82f6;
@@ -61,8 +59,9 @@ h1 {
   color: #2563eb;
 }
 
-/* Карточка формы */
-#form {
+/* Карточки форм */
+#form,
+#matrixForm {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -74,7 +73,10 @@ h1 {
 }
 
 /* Текстовые поля */
-#intervalInput {
+#intervalInput,
+#initialGuessInput,
+#matrixInput,
+#vectorInput {
   padding: 10px;
   border: 1px solid #d1d5db;
   border-radius: 10px;
@@ -83,14 +85,24 @@ h1 {
   transition: border-color 0.2s;
 }
 
-#intervalInput:focus {
+#matrixInput {
+  min-height: 40px;
+  height: 100px;
+  resize: vertical;
+}
+
+#intervalInput:focus,
+#initialGuessInput:focus,
+#matrixInput:focus,
+#vectorInput:focus {
   outline: none;
   border-color: #3b82f6;
   background: #fff;
 }
 
-/* Кнопка */
-#calcButton {
+/* Кнопки */
+#calcButton,
+#submitButton {
   background-color: #3b82f6;
   color: white;
   padding: 12px 24px;
@@ -104,20 +116,24 @@ h1 {
 }
 
 @media (hover:hover) {
-  #calcButton:hover {
+
+  #calcButton:hover,
+  #submitButton:hover {
     opacity: 0.9;
     transform: translateY(-2px);
   }
 }
 
-#calcButton:active {
+#calcButton:active,
+#submitButton:active {
   transform: scale(0.97);
   opacity: 1;
 }
 
 /* Начальное состояние */
 #resultSpan,
-#functionChart {
+#functionChart,
+#matrixChart {
   display: none;
 }
 
@@ -130,11 +146,13 @@ h1 {
   border: 1px solid #e1e3e6;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   font-size: 16px;
+  min-height: 40px;
   white-space: pre-line;
 }
 
-/* График */
-#functionChart {
+/* Графики */
+#functionChart,
+#matrixChart {
   margin-top: 20px;
   background: white;
   padding: 16px;
@@ -142,4 +160,15 @@ h1 {
   border: 1px solid #e1e3e6;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   max-height: 400px;
+}
+
+@media (max-width: 700px) {
+  .header-container {
+    flex-direction: column-reverse;
+  }
+
+  .back-link {
+    width: 100%;
+    text-align: left;
+  }
 }
