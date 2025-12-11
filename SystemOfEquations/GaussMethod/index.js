@@ -1,5 +1,20 @@
-const resultSpan = document.getElementById("gaussResultSpan");
-const chartCanvas = document.getElementById("gaussMatrixChart");
+const matrix = [
+  [-5.87, -7.28, -3.15, -0.42],
+  [6.43, -3.98, -7.55, -1.53],
+  [0.93, 9.41, 0.35, -0.23],
+  [-9.87, -0.09, 0.04, 9.96],
+];
+
+const vector = [25.1, 30.3, -44.6, 85.8];
+
+const matrixInput = document.getElementById("matrixInput");
+const vectorInput = document.getElementById("vectorInput");
+
+matrixInput.value = JSON.stringify(matrix);
+vectorInput.value = JSON.stringify(vector);
+
+const resultSpan = document.getElementById("resultSpan");
+const chartCanvas = document.getElementById("matrixChart");
 let chart = null;
 let chartExists = false;
 
@@ -136,17 +151,13 @@ function handleSubmit(e) {
 
   try {
     matrix =
-      gaussMatrixInput.value.trim() === ""
-        ? [[]]
-        : JSON.parse(gaussMatrixInput.value);
+      matrixInput.value.trim() === "" ? [[]] : JSON.parse(matrixInput.value);
     vector =
-      gaussVectorInput.value.trim() === ""
-        ? []
-        : JSON.parse(gaussVectorInput.value);
+      vectorInput.value.trim() === "" ? [] : JSON.parse(vectorInput.value);
 
     if (!Array.isArray(matrix) || !Array.isArray(vector)) throw new Error();
   } catch {
-    gaussResultSpan.innerHTML =
+    resultSpan.innerHTML =
       "<p style='text-align:center'>Неверный формат данных</p>";
 
     if (chart) {
@@ -163,7 +174,7 @@ function handleSubmit(e) {
     !matrix.every((row) => Array.isArray(row) && row.length === n) ||
     vector.length !== n
   ) {
-    gaussResultSpan.innerHTML =
+    resultSpan.innerHTML =
       "<p style='text-align:center'>Размеры не совпадают</p>";
 
     if (chart) chart.destroy();
@@ -180,7 +191,7 @@ function handleSubmit(e) {
   // Решаем систему
   const result = gaussMethod(matrix, vector).map((x) => x.toFixed(3));
 
-  gaussResultSpan.innerHTML = `<ul>${result
+  resultSpan.innerHTML = `<ul>${result
     .map((x, i) => `<li>x${i + 1} = ${x}</li>`)
     .join("")}</ul>`;
 
@@ -189,4 +200,4 @@ function handleSubmit(e) {
   updateVisibility();
 }
 
-gaussMatrixForm.addEventListener("submit", handleSubmit);
+matrixForm.addEventListener("submit", handleSubmit);

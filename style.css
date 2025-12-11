@@ -26,6 +26,13 @@ h1 {
   color: #333;
 }
 
+.lab-section {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 2rem;
+}
+
+
 h2 {
   font-size: 1.5rem;
   font-weight: 500;
@@ -68,13 +75,6 @@ li a:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
   border-color: #d1d5db;
 }
-
-.lab-section {
-  width: 100%;
-  max-width: 900px;
-  margin-bottom: 2rem;
-}
-
 
 /* 2 карточки в строке на узких экранах */
 @media (max-width: 700px) {

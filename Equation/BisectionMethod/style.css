@@ -36,9 +36,7 @@ h1 {
   width: 100%;
   max-width: 700px;
   margin: 0 auto 20px;
-  /* по центру страницы + отступ снизу */
   text-align: center;
-  /* для центрирования h1 */
 }
 
 .header-container h1 {
@@ -63,9 +61,8 @@ h1 {
   color: #2563eb;
 }
 
-
 /* Карточка формы */
-#matrixForm {
+#form {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -77,34 +74,23 @@ h1 {
 }
 
 /* Текстовые поля */
-
-#matrixInput {
-  min-height: 40px;
-  height: 100px;
-}
-
-#matrixInput,
-#vectorInput {
+#intervalInput {
   padding: 10px;
   border: 1px solid #d1d5db;
   border-radius: 10px;
   font-size: 15px;
-  resize: vertical;
   background: #f9fafb;
   transition: border-color 0.2s;
 }
 
-
-
-#matrixInput:focus,
-#vectorInput:focus {
+#intervalInput:focus {
   outline: none;
   border-color: #3b82f6;
   background: #fff;
 }
 
 /* Кнопка */
-#submitButton {
+#calcButton {
   background-color: #3b82f6;
   color: white;
   padding: 12px 24px;
@@ -118,20 +104,20 @@ h1 {
 }
 
 @media (hover:hover) {
-  #submitButton:hover {
+  #calcButton:hover {
     opacity: 0.9;
     transform: translateY(-2px);
   }
 }
 
-#submitButton:active {
+#calcButton:active {
   transform: scale(0.97);
   opacity: 1;
 }
 
 /* Начальное состояние */
 #resultSpan,
-#matrixChart {
+#functionChart {
   display: none;
 }
 
@@ -144,16 +130,16 @@ h1 {
   border: 1px solid #e1e3e6;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   font-size: 16px;
-  min-height: 40px;
   white-space: pre-line;
 }
 
 /* График */
-#matrixChart {
+#functionChart {
   margin-top: 20px;
   background: white;
   padding: 16px;
   border-radius: 16px;
   border: 1px solid #e1e3e6;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  max-height: 400px;
 }

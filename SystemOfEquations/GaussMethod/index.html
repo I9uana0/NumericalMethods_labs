@@ -10,22 +10,22 @@
 </head>
 
 <body>
-  <div id="gaussWrapper">
+  <div id="wrapper">
     <div class="header-container">
       <a href="/" class="back-link">← На главную</a>
       <h1>Метод Гаусса</h1>
     </div>
 
-    <form id="gaussMatrixForm">
-      <textarea required id="gaussMatrixInput" type="text"
+    <form id="matrixForm">
+      <textarea required id="matrixInput" type="text"
         placeholder="Введите матрицу в формате: [[линия], [линия]]"></textarea>
-      <input required id="gaussVectorInput" type="text" placeholder="Введите вектор в формате: [вектор]">
-      <button id="gaussSubmitButton" type="submit">Рассчитать</button>
+      <input required id="vectorInput" type="text" placeholder="Введите вектор в формате: [вектор]">
+      <button id="submitButton" type="submit">Рассчитать</button>
     </form>
-    <span id="gaussResultSpan"></span>
-    <canvas id="gaussMatrixChart"></canvas>
+    <span id="resultSpan"></span>
+    <canvas id="matrixChart"></canvas>
   </div>
-  <script src="script.js"></script>
+  <script src="index.js"></script>
 </body>
 
 </html>
